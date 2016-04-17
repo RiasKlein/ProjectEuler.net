@@ -9,7 +9,7 @@
 #	we can see that the 6th prime is 13.
 #
 #	What is the 10,001st prime number?
-#	Ans: 104759
+#	Ans: 104743
 #
 #	Program by: Shunman Tse
 #
@@ -30,6 +30,6 @@ def primes ( n ):
 def main():
 	value = 110000 
 	prime_numbers = primes ( value )
-	print ("The 10,001st prime number is: " + str(prime_numbers[10001]))
+	print ("The 10,001st prime number is: " + str(prime_numbers[10000]))
 	
 main()
