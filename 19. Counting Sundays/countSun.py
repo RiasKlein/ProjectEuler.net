@@ -42,9 +42,43 @@ def listLeapYear ( start, end ):
 		if isLeapYear (year):
 			leap_years.append (year)
 	return leap_years
+	
+def listDaysInYear ( year, leap_years ):
+	# September, April, June and November has 30 days
+	# All the rest has 31 except February which has 28 (except on leap years, 29)
+	if year in leap_years:
+		list = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+		return list
+	else:
+		list = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+		return list
 
 def main ():
-	leap_years = listLeapYear (1901, 2001)
-	print (leap_years)
+	start_year = 1901
+	end_year = 2000
+	
+	# Make a list of all the leap years from start ~ end years inclusive
+	leap_years = listLeapYear (start_year, end_year + 1)
+	
+	cur_day = 2				# Jan 1 1901 is a Tuesday
+	sunday_the_first = 0 	# Counter of sundays that were also the first of month
+	
+	# Iterate through the years from starting year to ending year
+	for year in range (start_year, end_year + 1):
+		# Make a list of the days of the year of interest
+		list_days = listDaysInYear (year, leap_years) 
+		
+		# Iterate through the months of the year one day at a time
+		# If it's the first of a month and it's sunday, increment the counter
+		for month in range (0, len(list_days)):
+			day_in_month = 1
+			while day_in_month <= list_days [month]:
+				if (cur_day == 0 and day_in_month == 1):
+					sunday_the_first += 1
+				cur_day = ( cur_day + 1 ) % 7
+				day_in_month += 1
+	
+	# Print out the number of sundays that coincided the first of a month
+	print (sunday_the_first)	
 
 main()
