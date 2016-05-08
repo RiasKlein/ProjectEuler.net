@@ -2,7 +2,7 @@
 
 Programs to tackle Project Euler problems. Refer to: projecteuler.net for the latest problems.
 
-### About this Repo
+## About this Repo
 
 Solving the problems on projecteuler.net can be a challenging task and sometimes, I may use techniques or approaches 
 that I may want to refer to at a later time. The reason this repo exists is so I can easily see how I
