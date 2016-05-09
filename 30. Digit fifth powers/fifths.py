@@ -20,6 +20,8 @@
 #
 #################################################################################
 
+import math
+
 """
 For this problem, we can extract each digit of the number that we are considering
 by using modulo and then dividing by 10. For example if we have 1634:
@@ -28,11 +30,32 @@ by using modulo and then dividing by 10. For example if we have 1634:
 By repeating this procedure, we can extract all the digits of the number.
 Then we can apply the fifth power to each of the extracted digits.
 If the sum of the fifth powers equal the original number, we got a hit!
+
+Now what is the upperbound?
+The upperbound is less than 9^5 * 5 = 295245
+So using 300K for the upperbound is more than enough
 """
 
 # main
 def main():
+	sum = 0
 	
-	
+	for x in range (2, 300000):
+		sum_of_fifths = 0		# Sum of fifths for the current case
+		num = x					# num is used to help extract digits of x
+		
+		while (num > 0):
+			digit = num % 10	# get a digit from num
+			num /= 10			# divide num by 10
+			num = int(num)		# keep num as an int (truncates floats)
+			
+			sum_of_fifths += math.pow (digit, 5)
+			sum_of_fifths = int (sum_of_fifths)
+			
+		if (sum_of_fifths == x):
+			sum += sum_of_fifths
+			print (sum_of_fifths)
+			
+	print ("Sum: " + str(sum))
 	
 main()
