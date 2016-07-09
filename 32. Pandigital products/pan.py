@@ -2,6 +2,7 @@
 #
 #	pan.py
 #	Project Euler Problem 32
+#	Pandigital Products
 #
 #	We shall say that an n-digit number is pandigital if it makes use of all the 
 #	digits 1 to n exactly once; 

@@ -1,6 +1,8 @@
 #################################################################################
 #
 #	cycle.py
+#	Project Euler Problem 26
+#	Reciprocal cycles
 #
 #	A unit fraction contains 1 in its numerator. The decimal representation of 
 #	the unit fractions with denominators 2 to 10 are given:
