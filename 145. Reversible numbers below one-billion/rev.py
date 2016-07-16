@@ -19,23 +19,23 @@
 #
 #################################################################################
 
-def no_evens ( num ):
-	num = str(num)
-	for digit in num:
-		if digit == '0' or digit == '2' or digit == '4' or digit == '6' or digit == '8':
-			return False
-	return True
-
 def reverse ( num ):
-	return int( str (num) [::-1] )
-
-def no_leading_zero ( num ):
-	num = str (num)
-	if num[0] == '0':
-		return False
-	return True
+	return int (str (num) [::-1] )
 
 def main():
-	reversible_numbers = 0
-	for x in range (1000):
+	found = 0
+	
+	for x in range (1, 1000000000, 2):
+		if x % 10 == 0:
+			pass
+		else:
+			sum = x + reverse (x)
+			sum = str(sum)
+			if '2' in sum or '4' in sum or '6' in sum or '8' in sum or '0' in sum:
+				pass
+			else:
+				found += 1
+				
+	print (found * 2)		
 		
+main()
