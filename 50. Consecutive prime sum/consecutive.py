@@ -37,6 +37,9 @@ def getLongestChain ( num, primes_list ):
 		index = starting_index
 		sum_of_chain = primes_list[index]
 		current_chain = 1
+
+		if sum_of_chain >= num:
+			return longestChain
 		
 		while sum_of_chain < num:
 			index += 1
@@ -50,15 +53,17 @@ def getLongestChain ( num, primes_list ):
 	return (longestChain)
 
 def main():
-	primes_list = primes (1000)
+	primes_list = primes (1000000)
 
 	longestChain = 0
 	longestNum = 0
 	for x in primes_list:
-		chain_length = getLongestChain (x, primes_list)
-		if chain_length > longestChain:
-			longestChain = chain_length
-			longestNum = x
+		if x > 200000:
+			chain_length = getLongestChain (x, primes_list)
+			if chain_length > longestChain:
+				longestChain = chain_length
+				longestNum = x
+				print (str (longestNum) + ' with chain of: ' + str (longestChain))
 
 	print (longestNum)
 
