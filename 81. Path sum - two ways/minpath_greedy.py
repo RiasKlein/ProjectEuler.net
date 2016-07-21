@@ -1,6 +1,6 @@
 #################################################################################
 #
-#	minpath.py
+#	minpath_greedy.py
 #
 #	Project Euler (projecteuler.net) Problem 81
 #	Path sum: two ways
@@ -17,6 +17,9 @@
 #
 #	Find the minimal path sum, in matrix.txt attached, from the 
 #	top left to the bottom right by only moving right and down.
+#
+#	This program uses the greedy search method in order to get a local minimum.
+#	It would appear that the local minimum is not the value we need...
 #
 #	Program by: Shunman Tse
 #
@@ -46,29 +49,49 @@ def readMatrix (filename):
 	return matrix
 
 def main():
-	# Read the text file for the data matrix
-	data_matrix = readMatrix (filename)
+	# Read the text file for the matrix
+	matrix = readMatrix (filename)
 	
-	# Get the size of the data matrix
-	data_matrix_size = len(data_matrix)
+	# Get the size of the matrix
+	matrix_size = len(matrix)
 
-	# Cost matrix
-	cost_matrix = [[[] for i in range(data_matrix_size)] for i in range (data_matrix_size)]
+	current_row = matrix_size - 1
+	current_col = matrix_size - 1
+
+	current_cost = 0
 	
-	for row in range (data_matrix_size):
-		for col in range (data_matrix_size):
-			if row == 0 and col == 0: 	# This is the top-left most tile, the cost is just itself
-				cost_matrix[row][col] = data_matrix[row][col]
-			elif row == 0 and col > 0:
-				# This is the top row in which we just move to the right
-				cost_matrix[row][col] = data_matrix[row][col] + cost_matrix[row][col-1]
-			elif row > 0 and col == 0:
-				# This is the left-most column in which we just move down
-				cost_matrix[row][col] = data_matrix[row][col] + cost_matrix[row-1][col]
+	while current_col != 0 or current_row != 0:
+		print (matrix[current_row][current_col])
+		current_cost += matrix[current_row][current_col]
+
+		# From any given position, there are two directions to travel in
+		# We can go up or move to the left
+
+		up_value = -1
+		left_value = -1
+
+		# Consider moving up
+		if current_col > 0:
+			up_value = matrix[current_row][current_col - 1]
+
+		# Consider moving to the left
+		if current_row > 0:
+			left_value = matrix[current_row-1][current_col]
+
+		if up_value == -1:
+			# Go left
+			current_row -= 1
+		elif left_value == -1:
+			current_col -= 1
+		else:
+			if up_value < left_value:
+				# Go up
+				current_col -= 1
 			else:
-				# These are the inner tiles
-				cost_matrix[row][col] = min ( (data_matrix[row][col] + cost_matrix[row][col-1]), (data_matrix[row][col] + cost_matrix[row-1][col]) )
-					
-	print (cost_matrix[ data_matrix_size-1 ][ data_matrix_size-1 ])
+				current_row -= 1
+
+	print (matrix[0][0])
+	current_cost += matrix[0][0]
+	print ('Total Cost: ' + str(current_cost))
 
 main()
