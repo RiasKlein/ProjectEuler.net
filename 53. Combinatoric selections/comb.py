@@ -16,6 +16,8 @@
 #
 #	How many, not necessarily distinct, values of nCr, for 1 <= n <= 100,
 #	are greater than one-million?
+#
+#	Program by Shunman Tse
 #	
 #################################################################################
 
