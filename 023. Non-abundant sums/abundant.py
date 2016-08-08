@@ -28,12 +28,34 @@
 import math, itertools
 
 abundant_numbers = []	# List to hold all the abundant numbers we find
+integers_list = []
 
 def main():
-	# Initialize the abundant_numbers array by getting all abundant numbers
-	init_abundant_numbers ()
+	# Initialize lists
+	init()
 
-	print (abundant_numbers)
+	# Find different combinations of abundant numbers in pairs 
+	combinations = list ( itertools.combinations (abundant_numbers, 2))
+	for pair in combinations:
+		sum_of_pair = pair[0] + pair[1]
+		if sum_of_pair in integers_list:
+			integers_list.remove (sum_of_pair)
+
+	answer = 0
+	for element in integers_list:
+		answer += element
+
+	print (answer)
+
+
+def init():
+	init_abundant_numbers()
+	init_integers_list()
+
+def init_integers_list ():
+	global integers_list
+	for num in range (1, 28124):
+		integers_list.append (num)
 
 def init_abundant_numbers ():
 	global abundant_numbers
