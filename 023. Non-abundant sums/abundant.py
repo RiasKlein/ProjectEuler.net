@@ -20,46 +20,53 @@
 #
 ################################################################################
 
-# The basic strategy to tackle this problem would be to:
-#	1. Find all the abundant numbers up to 28123 (which is the upper bound)
-#	2. Find the sum of all positive integers which cannot be made by the
-#		sum of two abundant numbers
+import math
 
-import math, itertools
-
+max_value = 28123
 abundant_numbers = []	# List to hold all the abundant numbers we find
-integers_list = []
+numbers_markers = []	# List of markers for numbers to keep
 
 def main():
-	# Initialize lists
-	init()
+	init()		# Initialize 
 
-	# Find different combinations of abundant numbers in pairs 
-	combinations = list ( itertools.combinations (abundant_numbers, 2))
-	for pair in combinations:
-		sum_of_pair = pair[0] + pair[1]
-		if sum_of_pair in integers_list:
-			integers_list.remove (sum_of_pair)
+	# Find all the values that are sums of abundant numbers and mark them
+	for i in range ( len (abundant_numbers)):
+		for j in range (i, len(abundant_numbers)):
+			sum_of_i_j = abundant_numbers[i] + abundant_numbers[j]
+			if sum_of_i_j <= max_value:
+				numbers_markers[sum_of_i_j] = False
+			else:
+				break
+				
+		if i > max_value / 2:
+			break
+	
+	# Total up anything that isn't marked
+	total = 0
+	for i in range ( len (numbers_markers) ):
+		if numbers_markers[i] == True:
+			total += i
+			
+	# Output the result
+	print (total)
 
-	answer = 0
-	for element in integers_list:
-		answer += element
-
-	print (answer)
-
-
+# init
+#	Runs setup functions to create necessary lists of numbers	
 def init():
 	init_abundant_numbers()
-	init_integers_list()
+	init_numbers_markers()
 
-def init_integers_list ():
-	global integers_list
-	for num in range (1, 28124):
-		integers_list.append (num)
+# init_numbers_markers
+#	Sets up a list of boolean markers for us to know which numbers to cross out / keep
+def init_numbers_markers ():
+	global numbers_markers
+	numbers_markers = [True] * (max_value + 1)
 
+# init_abundant_numbers
+#	Creates list of abundant numbers up to max value
 def init_abundant_numbers ():
 	global abundant_numbers
-	for num in range (12, 28124):
+	for num in range (12, max_value + 1):
 		if is_abundant (num):
 			abundant_numbers.append (num)
 
@@ -71,8 +78,12 @@ def is_abundant ( num ):
 	for x in range ( 2, int (math.sqrt(num)) + 1):
 		if num % x == 0:
 			temp = num
-			sum_of_proper_divisors += x
 			sum_of_proper_divisors += (temp / x)
+			
+			# If we have both divisors as the same value, don't overcount
+			# Example: 16 = 4 * 4; we only want to count 4 once
+			if (x != (temp/x)):
+				sum_of_proper_divisors += x
 
 	# Consider the factor of 1 which works for all values
 	sum_of_proper_divisors += 1
@@ -81,5 +92,4 @@ def is_abundant ( num ):
 		return True
 	return False
 	
-
 main()
